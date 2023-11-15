@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name='traffic_barrel'>
+    <static>true</static>
+    <link name="barrel">
+      <visual name="visual">
+            <geometry>
+                <mesh>
+                    <uri>model://ramp/materials/meshes/ramp.dae</uri>
+		    <scale>2.6 2.6 2.6</scale>
+                </mesh>
+            </geometry>
+            <material>
+                <script>
+                    <uri>model://ramp/materials/scripts</uri>
+                    <uri>model://ramp/materials/textures</uri>
+                    <name>ramp/Image</name>
+                </script>
+            </material>
+        </visual>
+        <collision name="collision">
+            <geometry>
+                <mesh>
+                    <uri>model://ramp/materials/meshes/ramp.dae</uri>
+		            <scale>2.6 2.6 2.6</scale>
+                </mesh>
+            </geometry>
+        </collision>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,24 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name='traffic_barrel_triple'>
+    <static>true</static>
+    <link name="barrel">
+      <visual name="visual">
+            <geometry>
+                <mesh>
+                    <uri>model://traffic_barrel_triple/materials/meshes/Traffic-Cones_Triple.dae</uri>
+		    <scale>1.5 1.5 2.5</scale>
+                </mesh>
+            </geometry>
+        </visual>
+        <collision name="collision">
+            <geometry>
+                <mesh>
+                    <uri>model://traffic_barrel_triple/materials/meshes/Traffic-Cones_Triple.dae</uri>
+		    <scale>1.5 1.5 2.5</scale>
+                </mesh>
+            </geometry>
+        </collision>
+    </link>
+  </model>
+</sdf>

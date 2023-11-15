@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+	<node pkg="cloudy" type="morning.py" name="morning" output="screen"/>
+	<node pkg="cloudy" type="noon" name="noon" output="screen"/>
+	<node pkg="cloudy" type="afternoon" name="afternoon" output="screen"/>
+	<!--node pkg="cloudy" type="evening" name="evening" output="screen"/>
+	<node pkg="cloudy" type="night" name="night" output="screen"/-->
+
+	<node pkg="move_base" type="move_base" name="move_base" output="screen">
+		<rosparam file="$(find cloudy)/yaml/move_base.yaml" command="load"/>
+	</node>
+	<!--node pkg="cloudy" type="evening" name="evening" output="screen"/>
+	<node pkg="cloudy" type="night" name="night" output="screen"/-->
+</launch>
+

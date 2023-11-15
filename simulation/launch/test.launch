@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="include_potholes" default="false"/>
+    <arg name="gui" default="true"/>
+    <arg name="paused" default="false"/>
+
+
+    <arg name="origin_xyz" default="-x 0 -y -41 -z 0.35002"/>
+    <arg name="origin_RPY" default="-R 0 -P 0 -Y 3.14"/>
+    <arg name="robot_name" value="solo"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="map_odom" args="0 0 0 0 0 0 map odom 10" />
+    <node pkg="tf" type="static_transform_publisher" name="scan_link" args="0 0 0 0 0 0 base_link base_scan_link 10" /> 
+    <node pkg="tf" type="static_transform_publisher" name="something" args="0 0 0 -1.57 0 -1.57 zed2i_left_camera_frame zed_depth_camera 10" />
+
+     <!-- Run the random pose generator script -->
+    <node name="randompose" pkg="simulation" type="randompose.py" output="screen"/>
+    <node name="generatewithground" pkg="simulation" type = "generatewithground.py" output = "screen"/>    
+   
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" unless="$(arg include_potholes)" value="$(find simulation)/worlds/igvc_course_only_map.world"/>
+        <arg name="world_name" if="$(arg include_potholes)" value="$(find simulation)/worlds/igvc_course_map_with_potholes.world"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="recording" value="false"/>
+        <arg name="debug" value="false"/>
+        <arg name="verbose" value="true"/>
+    </include>
+
+    <include file="$(find robot_description)/launch/robot.launch" />
+
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find simulation)/urdf/robot.urdf -urdf $(arg origin_xyz) $(arg origin_RPY) -model $(arg robot_name)" /> 
+    
+    
+</launch>

@@ -1,0 +1,112 @@
+# move_base configuration parameters
+
+use_amcl: false
+# use_navfn: false
+
+# The base frame of the robot
+robot_base_frame: "base_link"
+
+# The global frame used for planning
+global_frame: "map"
+
+# The name of the topic to publish navigation goals
+goal_topic: "move_base_simple/goal"
+
+# Planner parameters
+base_global_planner: "navfn/NavfnROS"
+# Navigation planner
+base_local_planner: "base_local_planner/TrajectoryPlannerROS"
+
+map_type: "costmap"
+observation_sources: "scan"
+scan: {sensor_frame: "base_scan_link", data_type: "LaserScan", topic: "scan", marking: true, clearing: true}
+
+GlobalPlanner:
+  allow_unknown: true
+  default_tolerance: 0.9
+  force_reinit_new_goal_dist: 0
+  orientation_mode: 1
+  planner_frequency: 5.0
+  potential_scale: 0.1
+  publish_potential: true
+  use_dijkstra: true
+  use_grid_path: true
+  use_quadratic: true
+
+# Global Planner Parameters
+NavfnROS:
+  allow_unknown: false
+  tolerance: 0.4
+
+# Local Planner Parameters
+TrajectoryPlannerROS:
+  acc_lim_x: 2.5
+  acc_lim_theta: 3.2
+  max_vel_x: 2
+  min_vel_x: 0.1
+  max_vel_theta: 1.0
+  min_vel_theta: -1.0
+  holonomic_robot: false
+  sim_time: 1.0
+  footprint: [[0.3, -0.15], [0.3, 0.15], [-0.3, 0.15], [-0.3, -0.15]]
+  robot_radius: 0.3
+
+# Costmap Parameters
+local_costmap:
+  global_frame: "odom"
+  robot_base_frame: "base_link"
+  update_frequency: 5.0
+  publish_frequency: 2.0
+  static_map: true
+
+  width: 6
+  height: 6
+  
+  resolution: 0.05
+  rolling_window: true
+
+  plugins:
+    - {name: obstacle_layer, type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer, type: "costmap_2d::InflationLayer"}
+
+global_costmap:
+  map_topic: "map"
+  global_frame: "map"
+  robot_base_frame: "base_link"
+  update_frequency: 5.0
+  publish_frequency: 4.0
+  static_map: true
+
+# Trajectory Rollout Parameters
+TrajectoryPlanner:
+  holonomic_robot: false
+  acc_lim_x: 3
+  acc_lim_y: 3
+  acc_lim_theta: 2.5
+  max_vel_x: 1.5
+  min_vel_x: 0.8
+  max_vel_y: 0.0
+  min_vel_y: 0.0
+  max_vel_theta: 0.6
+  min_vel_theta: -0.6
+  min_in_place_vel_theta: 0.4
+  escape_vel: -0.1
+  sim_time: 1.0
+  angular_sim_granularity: 0.1
+  sim_granularity: 0.025
+  vx_samples: 20
+  vy_samples: 0
+  vtheta_samples: 40
+  penalize_negative_x: true
+  heading_lookahead: 0.325
+  oscillation_reset_dist: 0.05
+  escape_reset_dist: 0.1
+  escape_reset_theta: 0.1
+
+# Recovery Behaviors
+recovery_behaviors:
+  - name: conservative_reset
+    type: clear_costmap_recovery/ClearCostmapRecovery
+  - name: aggressive_reset
+    type: clear_costmap_recovery/ClearCostmapRecovery
+
