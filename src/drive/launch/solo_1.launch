@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+  <node pkg="tf" type="static_transform_publisher" name="map_odom" args="0 0 0 0 0 0 map odom 10" />
+  <include file="$(find drive)/launch/move_base2.launch">
+    <arg name="move_forward_only" value="true"/>
+  </include>
+  <node pkg="drive" type="throw_map" name="throw_map" />
+  <node pkg="rviz" type="rviz" name="rizviz" args="-d $(find drive)/base.rviz" />
+</launch>

@@ -1,0 +1,5 @@
+robot_description
+/home/straw/Documents/igvc_2024/devel/.private/robot_description/cmake.lock /home/straw/Documents/igvc_2024/devel/./cmake.lock
+/home/straw/Documents/igvc_2024/devel/.private/robot_description/share/robot_description/cmake/robot_descriptionConfig.cmake /home/straw/Documents/igvc_2024/devel/share/robot_description/cmake/robot_descriptionConfig.cmake
+/home/straw/Documents/igvc_2024/devel/.private/robot_description/share/robot_description/cmake/robot_descriptionConfig-version.cmake /home/straw/Documents/igvc_2024/devel/share/robot_description/cmake/robot_descriptionConfig-version.cmake
+/home/straw/Documents/igvc_2024/devel/.private/robot_description/lib/pkgconfig/robot_description.pc /home/straw/Documents/igvc_2024/devel/lib/pkgconfig/robot_description.pc

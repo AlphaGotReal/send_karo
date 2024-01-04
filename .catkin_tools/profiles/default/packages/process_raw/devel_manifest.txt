@@ -1,0 +1,7 @@
+process_raw
+/home/straw/Documents/igvc_2024/devel/.private/process_raw/cmake.lock /home/straw/Documents/igvc_2024/devel/./cmake.lock
+/home/straw/Documents/igvc_2024/devel/.private/process_raw/share/process_raw/cmake/process_rawConfig-version.cmake /home/straw/Documents/igvc_2024/devel/share/process_raw/cmake/process_rawConfig-version.cmake
+/home/straw/Documents/igvc_2024/devel/.private/process_raw/share/process_raw/cmake/process_rawConfig.cmake /home/straw/Documents/igvc_2024/devel/share/process_raw/cmake/process_rawConfig.cmake
+/home/straw/Documents/igvc_2024/devel/.private/process_raw/lib/process_raw/cmake.lock /home/straw/Documents/igvc_2024/devel/lib/process_raw/cmake.lock
+/home/straw/Documents/igvc_2024/devel/.private/process_raw/lib/process_raw/mask /home/straw/Documents/igvc_2024/devel/lib/process_raw/mask
+/home/straw/Documents/igvc_2024/devel/.private/process_raw/lib/pkgconfig/process_raw.pc /home/straw/Documents/igvc_2024/devel/lib/pkgconfig/process_raw.pc

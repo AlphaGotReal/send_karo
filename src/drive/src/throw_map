@@ -1,0 +1,40 @@
+#! /usr/bin/python3
+
+import rospy
+import numpy as np
+
+from nav_msgs.msg import OccupancyGrid
+from geometry_msgs.msg import Point, Quaternion
+
+rospy.init_node("throw_map")
+
+width = 900
+height = 900
+resolution = 0.1
+
+map_ = OccupancyGrid()
+map_.header.frame_id = "map"
+
+map_.info.width = width
+map_.info.height = height
+map_.info.resolution = resolution
+map_.info.origin.position = Point(-width*resolution/2, -height*resolution/2, 0)
+map_.info.origin.orientation = Quaternion(0, 0, 0, 1)
+
+data = np.zeros((height, width), dtype=np.int16)
+
+for r in range(50, 900, 50):
+    data[:, r] = -np.ones((900, ), dtype=np.int16)
+
+map_.data = data.flatten().tolist()
+pub = rospy.Publisher("/map", OccupancyGrid, queue_size=1)
+
+rate = rospy.Rate(10)
+
+while not rospy.is_shutdown():
+
+    pub.publish(map_)
+    rate.sleep()
+
+
+

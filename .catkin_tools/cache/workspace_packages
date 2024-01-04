@@ -1,0 +1,5 @@
+_workspace_packages=( ${(Q)"${(z)$(<<\EO:_workspace_packages
+'drive' 'generate' 'process_raw' 'robot_description' 'simulation'
+EO:_workspace_packages
+)}"} )
+_workspace_cache_file_path='/home/straw/Documents/igvc_2024/.catkin_tools/cache'

@@ -1,0 +1,54 @@
+#! /usr/bin/python3
+
+import os
+import time
+import numpy as np
+
+import rospy
+from sensor_msgs.msg import Image
+
+import cv2
+from cv_bridge import CvBridge
+
+class runner():
+
+    def __init__(self):
+
+        rospy.init_node("hsv_filter")
+
+        self.bridge = CvBridge()
+
+        self.mask_pub = rospy.Publisher("/lane_mask", Image, queue_size=10)
+        rospy.Subscriber("/zed/rgb/image_raw", Image, self.get_image)
+
+        self.hsv_lower = np.array([0, 0, 80])
+        self.hsv_upper = np.array([0, 0, 147])
+
+        while not rospy.is_shutdown():
+            pass
+
+    def get_image(self, image):
+        self.process_image(image)
+
+    def process_image(self, image):
+        
+        numpy_image = np.uint8(self.bridge.imgmsg_to_cv2(
+                                            image, 
+                                            desired_encoding="passthrough"))
+
+        numpy_image_hsv = cv2.cvtColor(numpy_image, cv2.COLOR_BGR2HSV)
+        mask = cv2.inRange(numpy_image_hsv, self.hsv_lower, self.hsv_upper)
+       
+        mask_image = Image()
+        mask_image.height = image.height
+        mask_image.width = image.width
+        mask_image.step = image.height
+        mask_image.encoding = "mono8"
+        mask_image.data = mask.flatten().tolist()
+
+        self.mask_pub.publish(mask_image)
+
+if __name__ == "__main__":
+    runner()
+    os.sys.exit(1)
+

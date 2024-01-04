@@ -1,0 +1,55 @@
+#! /usr/bin/python3
+
+import os
+import time
+import numpy as np
+import cv2
+
+import tensorflow as tf
+from keras.models import load_model
+
+import rospy
+from sensor_msgs.msg import Image
+
+model = load_model("unet2.h5")
+
+class detect():
+
+    def __init__(self):
+
+        rospy.init_node("att_res_unet")
+        # rospy.Subscriber("/zed2i/zed_node/rgb/image_rect_color", Image, self.process_image)
+        rospy.Subscriber("/zed/rgb/image_raw", Image, self.process_image)
+
+        self.mask_pub = rospy.Publisher("/lane_mask", Image, queue_size=100)
+
+        while not rospy.is_shutdown():
+            continue
+
+    def process_image(self, image):
+        global model
+
+        print(image.encoding)
+        mask_image = Image()
+        data = list(image.data)
+        data = np.array(data, dtype=np.uint8).reshape((image.height, image.width, 4))[:, :, 0:3]
+        data = cv2.resize(data, (256, 128))
+        # data = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
+        data = data.reshape((1, *data.shape))
+        mask = model.predict(data)
+
+        mask_image.height = mask.shape[1]
+        mask_image.width = mask.shape[2]
+        mask = mask.flatten() * 255
+        # mask[mask < 125] = 0
+        # mask[mask >= 125] = 255
+        mask_image.data = np.uint8(mask).tolist()
+        mask_image.encoding = "mono8"
+
+        self.mask_pub.publish(mask_image)
+        print("published lane mask")
+
+
+if __name__ == "__main__":
+    detect()
+

@@ -1,0 +1,5 @@
+lane_detection
+/home/straw/Documents/igvc_2024/devel/.private/lane_detection/cmake.lock /home/straw/Documents/igvc_2024/devel/./cmake.lock
+/home/straw/Documents/igvc_2024/devel/.private/lane_detection/share/lane_detection/cmake/lane_detectionConfig-version.cmake /home/straw/Documents/igvc_2024/devel/share/lane_detection/cmake/lane_detectionConfig-version.cmake
+/home/straw/Documents/igvc_2024/devel/.private/lane_detection/share/lane_detection/cmake/lane_detectionConfig.cmake /home/straw/Documents/igvc_2024/devel/share/lane_detection/cmake/lane_detectionConfig.cmake
+/home/straw/Documents/igvc_2024/devel/.private/lane_detection/lib/pkgconfig/lane_detection.pc /home/straw/Documents/igvc_2024/devel/lib/pkgconfig/lane_detection.pc
