@@ -1,20 +1,33 @@
-import sys
+import os
+import torch
+import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
-def generate_gaussian(shape:tuple, mu:tuple=(0, 0), sigma:tuple=(1, 1), show:bool=False):
-    h, w = shape
-    x, y = np.meshgrid(np.arange(w), np.arange(h))
-    
-    x = (x - mu[1])/sigma[1]
-    y = (y - mu[0])/sigma[0]
+midas = torch.hub.load("intel-isl/MiDaS", "MiDaS_small")
+midas.to("cpu")
+midas.eval()
 
-    g = 1/(sigma[1] * sigma[0] * 2 * np.pi) * np.exp(-0.5*x*x - 0.5*y*y)
+transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
+transform = transforms.small_transform
 
-    if (show):
-        plt.imshow(g, cmap="gray")
-        plt.show()
+cap = cv2.VideoCapture(0)
 
-    return g
+while cv2.waitKey(1) != ord('q'):
+    ret, frame = cap.read()
 
+    image_numpy = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)[50:-50, 50:-50, :]
+    image = transform(image_numpy).to('cpu')
+    with torch.no_grad():
+        pred = midas(image)
+        pred = torch.nn.functional.interpolate(
+            pred.unsqueeze(1),
+            size = image_numpy.shape[:2],
+            mode = 'bicubic',
+            align_corners = False
+        ).squeeze()
+        output = pred.cpu().numpy()
+        plt.imshow(output, cmap="bone")
+        plt.pause(0.001)
+    cv2.imshow("original", frame)
 
